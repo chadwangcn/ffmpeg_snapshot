@@ -1,0 +1,23 @@
+1，下载libjpeg的源代码  下载地址：http://www.ijg.org/files/jpegsr9a.zip  jpegsr9a.zip
+
+2、解压出来一堆文件，打开命令行窗口（CMD），进入代码所放的目录下
+如源码所在目录为E:\jpeg-9ad  则在命令行输入E: 回车，再输入cd jpeg-8d  ，cd就是进入文件夹的意思。
+
+3、运行命令：NMAKE /f makefile.vc  setup-v10 回车开始编译，然后问题就来了：
+  “nmake 不是内部或外部命令”
+    　　原因：没有安装vc或者没有选择环境变量。 
+解决方法：安装vc或vs，并选择环境变量；按以下方法设置： 【根据VS2010的实际安装路径设置】
+    . 在我的电脑 > 属性 > 高级 > 环境变量中设置“include”“lib”“path”变量的值， 如果没有这三个变量，就新建变量，如果有，就在当前的值后边添加以下值，值之间用分号隔开。
+    . include：D:\Program Files\Microsoft Visual Studio 10.0\VC\include\ 
+    . lib：D:\Program Files\Microsoft Visual Studio 10.0\VC\lib\ 
+    . 找到Microsoft Visual Studio .NET\Vc7\bin\cl.exe的动态链接库mspdb70.dll, 将mspdb70.dll的路径加入到
+  path的值：D:\Program Files\Microsoft Visual Studio 10.0\VC\bin
+    设置好后再次运行命令：NMAKE /f makefile.vc  setup-v10 回车
+
+
+5、又出现问题： “file 'win32.mak' not found”
+    　　提示找不到win32.mak文件，这个文件定义了一些必须的宏，这个文件在Windows SDK的安装目录中，打开makefile.vc文件修改第12行为：
+    !include <C:/Program Files/Microsoft SDKs/Windows/v6.0A/Include/win32.mak>
+    　　保存，再执行上述命令。
+	
+	
